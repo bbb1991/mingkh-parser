@@ -1,9 +1,10 @@
 import csv
 from datetime import datetime
+import codecs
 
 
 def get_filename(state, city=None):
-    dt = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    dt = datetime.now().strftime("%Y-%m-%d")
     if city:
         return r"{}_{}_{}.csv".format(state, city, dt)
     else:
@@ -12,7 +13,7 @@ def get_filename(state, city=None):
 
 def save_result(result, state, city=None):
     filename = get_filename(state, city)
-    with open(filename, "w") as f:
+    with codecs.open(filename, "w", "utf-8") as f:
         output = csv.writer(f)
         output.writerow(result[0].keys())
         for row in result:

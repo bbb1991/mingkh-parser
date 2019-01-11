@@ -11,7 +11,7 @@ api_url = "/api/houses"
 base_url = "http://dom.mingkh.ru"
 
 
-def get_payload(state, city=None):
+def get_payload(state, city):
     payload = {
         "current": 1,
         "rowCount": -1,
@@ -19,7 +19,7 @@ def get_payload(state, city=None):
         "region_url": state
     }
     if city:
-        payload.update({'city': city})
+        payload.update({'city_url': city})
     return payload
 
 
@@ -43,13 +43,14 @@ def requests_retry_session(
     return session
 
 
-def get_houses(state, city=None):
+def get_houses(state, city):
     payload = get_payload(state, city)
     r = requests.post(base_url + api_url, data=payload)
     if r.status_code != 200:
         print("Something went wrong! Status code is: {}".format(r.status_code))
         sys.exit(-1)
     body = r.content.decode()
+    print(body)
     data = json.loads(body)
     return data
 

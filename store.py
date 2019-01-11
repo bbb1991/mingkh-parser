@@ -1,4 +1,5 @@
 import csv
+import os
 from datetime import datetime
 
 
@@ -12,7 +13,7 @@ def get_filename(state, city=None):
 
 def save_result(result, state, city=None):
     filename = get_filename(state, city)
-    with open(filename, "w") as f:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), filename), "w") as f:
         output = csv.writer(f)
         output.writerow(result[0].keys())
         for row in result:

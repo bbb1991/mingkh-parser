@@ -81,19 +81,20 @@ def parse_html(text):
         values.append(table.text)
 
     temp = dict(zip(keys, values))
-    r = {}
+    r = {
+        'house_type': temp.get('Тип дома', "Нет данных"),
+        'living_quarters': temp.get('Жилых помещений', "Нет данных"),
+        'series_and_type_of_construction': temp.get('Серия, тип постройки', "Нет данных"),
+        'type_of_overlap': temp.get('Тип перекрытий', "Нет данных"),
+        'wall_material': temp.get('Материал несущих стен', "Нет данных"),
+        'type_of_garbage_chute': temp.get('Тип мусоропровода', "Нет данных"),
+        'recognized_as_emergency': temp.get('Дом признан аварийным', "Нет данных"),
+        'playground': temp.get('Детская площадка', "Нет данных"),
+        'sports_ground': temp.get('Спортивная площадка', "Нет данных"),
+        'cadastral_number': temp.get('Кадастровый номер', "Нет данных")
+    }
 
-    r['house_type'] = temp.get('Тип дома')
-    r['living_quarters'] = temp.get('Жилых помещений')
-    r['series_and_type_of_construction'] = temp.get('Серия, тип постройки')
-    r['type_of_overlap'] = temp.get('Тип перекрытий')
-    r['wall_material'] = temp.get('Материал несущих стен')
-    r['type_of_garbage_chute'] = temp.get('Тип мусоропровода')
-    r['recognized_as_emergency'] = temp.get('Дом признан аварийным')
-    r['playground'] = temp.get('Детская площадка')
-    r['sports_ground'] = temp.get('Спортивная площадка')
-    r['cadastral_number'] = temp.get('Кадастровый номер')
-    # r['management_company'] = temp.get('Управляющая компания')
+    # r['management_company'] = temp.get('Управляющая компания', "Нет данных")
 
     tables = soup.findAll('table')
 
@@ -107,35 +108,34 @@ def parse_html(text):
                 pass
 
     print(temp)
-    r['additional_info'] = temp.get('Дополнительная информация')
-    r['energy_efficiency_class'] = temp.get('Класс энергетической эффективности')
-    r['least_number_of_floors'] = temp.get('Наименьшее количество этажей')
-    r['residential_area'] = temp.get('Площадь жилых помещений м2')
-    r['non_residential_area'] = temp.get('Площадь нежилых помещений м2')
-    r['common_area'] = temp.get('Площадь помещений общего имущества м2')
-    r['land_area_common_property'] = temp.get('Площадь зем. участка общего имущества м2')
-    r['parking_area'] = temp.get('Площадь парковки м2')
-    r['formation_of_capital_fund'] = temp.get('Формирование фонда кап. ремонта')
-    r['equipment'] = temp.get('Оборудование')
-    # r['management_company'] = temp.get('Несущие стены')
-    r['basement_area'] = temp.get('Площадь подвала, кв.м')
-    r['roof'] = temp.get('Крыша')
-    # r['garbage_chute'] = temp.get('Мусоропровод')
-    r['overlap'] = temp.get('Перекрытия')
-    r['facade'] = temp.get('Фасад')
-    r['foundation'] = temp.get('Фундамент')
-    r['number_of_house_entries'] = temp.get('Количество вводов в дом, ед.')
-    r['cesspit_volume'] = temp.get('Объем выгребных ям, куб. м.')
-    r['ventilation'] = temp.get('Вентиляция')
-    r['water_disposal'] = temp.get('Водоотведение')
-    r['gutter_system'] = temp.get('Система водостоков')
-    r['hot_gas_supply'] = temp.get('Газоснабжение')
-    r['hot_water_supply'] = temp.get('Горячее водоснабжение')
-    r['fire_extinguishing_system'] = temp.get('Система пожаротушения')
-    r['heat_supply'] = temp.get('Теплоснабжение')
-    r['cold_water_supply'] = temp.get('Холодное водоснабжение')
-    r['power_supply'] = temp.get('Электроснабжение')
-
+    r['additional_info'] = temp.get('Дополнительная информация', "Нет данных")
+    r['energy_efficiency_class'] = temp.get('Класс энергетической эффективности', "Нет данных")
+    r['least_number_of_floors'] = temp.get('Наименьшее количество этажей', "Нет данных")
+    r['residential_area'] = temp.get('Площадь жилых помещений м2', "Нет данных")
+    r['non_residential_area'] = temp.get('Площадь нежилых помещений м2', "Нет данных")
+    r['common_area'] = temp.get('Площадь помещений общего имущества м2', "Нет данных")
+    r['land_area_common_property'] = temp.get('Площадь зем. участка общего имущества м2', "Нет данных")
+    r['parking_area'] = temp.get('Площадь парковки м2', "Нет данных")
+    r['formation_of_capital_fund'] = temp.get('Формирование фонда кап. ремонта', "Нет данных")
+    r['equipment'] = temp.get('Оборудование', "Нет данных")
+    # r['management_company'] = temp.get('Несущие стены', "Нет данных")
+    r['basement_area'] = temp.get('Площадь подвала, кв.м', "Нет данных")
+    r['roof'] = temp.get('Крыша', "Нет данных")
+    # r['garbage_chute'] = temp.get('Мусоропровод', "Нет данных")
+    r['overlap'] = temp.get('Перекрытия', "Нет данных")
+    r['facade'] = temp.get('Фасад', "Нет данных")
+    r['foundation'] = temp.get('Фундамент', "Нет данных")
+    r['number_of_house_entries'] = temp.get('Количество вводов в дом, ед.', "Нет данных")
+    r['cesspit_volume'] = temp.get('Объем выгребных ям, куб. м.', "Нет данных")
+    r['ventilation'] = temp.get('Вентиляция', "Нет данных")
+    r['water_disposal'] = temp.get('Водоотведение', "Нет данных")
+    r['gutter_system'] = temp.get('Система водостоков', "Нет данных")
+    r['hot_gas_supply'] = temp.get('Газоснабжение', "Нет данных")
+    r['hot_water_supply'] = temp.get('Горячее водоснабжение', "Нет данных")
+    r['fire_extinguishing_system'] = temp.get('Система пожаротушения', "Нет данных")
+    r['heat_supply'] = temp.get('Теплоснабжение', "Нет данных")
+    r['cold_water_supply'] = temp.get('Холодное водоснабжение', "Нет данных")
+    r['power_supply'] = temp.get('Электроснабжение', "Нет данных")
 
     return r
 
@@ -149,6 +149,7 @@ def parse_house(house_url):
     coords = get_coords(content)
     additional_data.update(coords)
 
+    # парсинг HTML страницы
     main_info = parse_html(content)
     additional_data.update(main_info)
 

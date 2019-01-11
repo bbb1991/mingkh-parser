@@ -50,7 +50,6 @@ def get_houses(state, city):
         print("Something went wrong! Status code is: {}".format(r.status_code))
         sys.exit(-1)
     body = r.content.decode()
-    print(body)
     data = json.loads(body)
     return data
 

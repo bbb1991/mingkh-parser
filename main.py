@@ -45,6 +45,7 @@ if __name__ == '__main__':
         row.update(extra_data)
         row.update({'state': s, 'city': c})
         result.append(row)
+        break
 
-    print(len(result))
+    print("Processed rows: {}".format(len(result)))
     store.save_result(result, state, city)

@@ -15,6 +15,10 @@ pip install -r requirements.txt
 ```
 python main.py -h
 ```
+Получение списка городов в регионе
+```
+python main.py -s chukotstiy-ao -l
+```
 Загрузка данных по всем городам по региону
 ```
 python main.py -s chukotstiy-ao

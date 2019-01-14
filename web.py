@@ -107,7 +107,6 @@ def parse_html(text):
             except:
                 pass
 
-    print(temp)
     r['additional_info'] = temp.get('Дополнительная информация', "Нет данных")
     r['energy_efficiency_class'] = temp.get('Класс энергетической эффективности', "Нет данных")
     r['least_number_of_floors'] = temp.get('Наименьшее количество этажей', "Нет данных")
@@ -136,6 +135,13 @@ def parse_html(text):
     r['heat_supply'] = temp.get('Теплоснабжение', "Нет данных")
     r['cold_water_supply'] = temp.get('Холодное водоснабжение', "Нет данных")
     r['power_supply'] = temp.get('Электроснабжение', "Нет данных")
+
+    # Remove spaces between float digits
+    for key in r:
+        try:
+            r[key] = float(r.get(key))
+        except ValueError as e:
+            pass
 
     return r
 

@@ -138,10 +138,7 @@ def parse_html(text):
 
     # Remove spaces between float digits
     for key in r:
-        try:
-            r[key] = float(r.get(key))
-        except ValueError as e:
-            pass
+        r[key] = re.sub(r'(\d)\s+(\d)', r'\1\2', r.get(key))
 
     return r
 

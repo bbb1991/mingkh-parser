@@ -9,7 +9,7 @@ from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
 api_url = "/api/houses"
-base_url = "http://dom.mingkh.ru"
+base_url = "https://dom.mingkh.ru"
 
 
 def get_payload(state, city):
@@ -54,20 +54,16 @@ def get_houses(state, city):
     data = json.loads(body)
     return data
 
+def get_coords_v2(house_id):
+    r = requests.get(base_url + '/api/map/house/' + house_id)
+    body = r.content.decode()
+    data = json.loads(body)
 
-def get_coords(text):
-    """
-    Извлечение координат из скачанного html
-    :param text: html
-    :return: dict с ключами coord_x, coord_y
-    """
-    yandex_map_url = re.findall("panoramas.api-maps.yandex.ru.*$", text, re.MULTILINE)
     try:
-        coords = dict(parse.parse_qsl(parse.urlsplit(yandex_map_url[0]).query)).get('ll').split(',')
-        return {'coord_x': coords[0], 'coord_y': coords[1]}
-    except IndexError as e:
-        return {'coord_x': 'Не задана', 'coord_y': 'Не задана'}
-
+        c = data.get('features')[0].get('geometry').get('coordinates')
+        return {'lat': c[0], 'long': c[1]}
+    except:
+        return {'lat': 'Не задана', 'long': 'Не задана'}
 
 def parse_html(text):
     soup = BeautifulSoup(text, 'html.parser')
@@ -149,7 +145,8 @@ def parse_house(house_url):
     content = r.content.decode()
 
     # извлечение координат
-    coords = get_coords(content)
+    _, _, _, hid = house_url.split('/')
+    coords = get_coords_v2(hid)
     additional_data.update(coords)
 
     # парсинг HTML страницы
